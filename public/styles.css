@@ -1,4 +1,4 @@
-:root {
+:root, [data-theme="light"] {
   --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   --panel-bg: rgba(255, 255, 255, 0.85);
   --panel-border: rgba(148, 163, 184, 0.25);
@@ -14,6 +14,100 @@
   --bg-input: #ffffff;
   --mono-font: 'JetBrains Mono', monospace;
   --sans-font: 'Outfit', sans-serif;
+
+  /* Theme variables for canvas & specific backgrounds */
+  --canvas-bg: #f8fafc;
+  --node-bg: #ffffff;
+  --node-outline: #64748b;
+  --node-title: #0f172a;
+  --node-ip: #64748b;
+  --link-color: rgba(15, 23, 42, 0.12);
+  --pulse-dot-color: rgba(2, 132, 199, 0.55);
+  --node-stack-color: rgba(15, 23, 42, 0.15);
+  --node-status-row-bg: #f8fafc;
+  --ws-list-bg: #ffffff;
+  --ws-table-th-bg: rgba(15, 23, 42, 0.04);
+  --ws-table-tr-even-bg: rgba(15, 23, 42, 0.015);
+  --ws-detail-bg: #f8fafc;
+  --ws-detail-header-bg: rgba(15, 23, 42, 0.04);
+  --ws-btn-bg: #ffffff;
+  --ws-btn-hover-bg: rgba(15, 23, 42, 0.05);
+  --ws-table-border: rgba(15, 23, 42, 0.04);
+  --speedo-bg: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  --panel-bg: rgba(30, 41, 59, 0.7);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-glow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  
+  --neon-blue: #38bdf8;
+  --neon-green: #34d399;
+  --neon-rose: #f43f5e;
+  --neon-amber: #fbbf24;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --bg-input: #1e293b;
+  --mono-font: 'JetBrains Mono', monospace;
+  --sans-font: 'Outfit', sans-serif;
+
+  /* Theme variables for canvas & specific backgrounds */
+  --canvas-bg: #0b0f19;
+  --node-bg: #1e293b;
+  --node-outline: #94a3b8;
+  --node-title: #f8fafc;
+  --node-ip: #94a3b8;
+  --link-color: rgba(255, 255, 255, 0.08);
+  --pulse-dot-color: rgba(56, 189, 248, 0.4);
+  --node-stack-color: rgba(255, 255, 255, 0.1);
+  --node-status-row-bg: #0f172a;
+  --ws-list-bg: #0f172a;
+  --ws-table-th-bg: rgba(255, 255, 255, 0.03);
+  --ws-table-tr-even-bg: rgba(255, 255, 255, 0.01);
+  --ws-detail-bg: #0f172a;
+  --ws-detail-header-bg: rgba(255, 255, 255, 0.03);
+  --ws-btn-bg: #1e293b;
+  --ws-btn-hover-bg: rgba(255, 255, 255, 0.05);
+  --ws-table-border: rgba(255, 255, 255, 0.05);
+  --speedo-bg: rgba(15, 23, 42, 0.95);
+}
+
+[data-theme="dusky"] {
+  --bg-gradient: linear-gradient(135deg, #18122B 0%, #2b1f3d 50%, #3e3256 100%);
+  --panel-bg: rgba(46, 37, 64, 0.75);
+  --panel-border: rgba(178, 164, 255, 0.15);
+  --panel-glow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  
+  --neon-blue: #a78bfa;  /* Premium Soft Purple/Amethyst */
+  --neon-green: #f472b6; /* Sunset Pink */
+  --neon-rose: #f43f5e;  /* Deep Coral */
+  --neon-amber: #fbbf24; /* Warm Gold */
+  --text-primary: #f5e8e4;
+  --text-muted: #a690b8;
+  --bg-input: #393053;
+  --mono-font: 'JetBrains Mono', monospace;
+  --sans-font: 'Outfit', sans-serif;
+
+  /* Theme variables for canvas & specific backgrounds */
+  --canvas-bg: #1d162a;
+  --node-bg: #393053;
+  --node-outline: #a690b8;
+  --node-title: #f5e8e4;
+  --node-ip: #a690b8;
+  --link-color: rgba(167, 139, 250, 0.15);
+  --pulse-dot-color: rgba(167, 139, 250, 0.4);
+  --node-stack-color: rgba(245, 232, 228, 0.1);
+  --node-status-row-bg: #18122B;
+  --ws-list-bg: #2e2540;
+  --ws-table-th-bg: rgba(167, 139, 250, 0.05);
+  --ws-table-tr-even-bg: rgba(167, 139, 250, 0.02);
+  --ws-detail-bg: #2e2540;
+  --ws-detail-header-bg: rgba(167, 139, 250, 0.05);
+  --ws-btn-bg: #393053;
+  --ws-btn-hover-bg: rgba(167, 139, 250, 0.08);
+  --ws-table-border: rgba(167, 139, 250, 0.08);
+  --speedo-bg: rgba(29, 22, 42, 0.95);
 }
 
 * {
@@ -131,6 +225,53 @@ h1 span {
 }
 
 .mode.active {
+  background: var(--neon-blue);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+/* Theme Container & Switches */
+.theme-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.theme-card {
+  display: flex;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--panel-border);
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-family: var(--sans-font);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  color: var(--text-primary);
+}
+
+.theme-btn.active {
   background: var(--neon-blue);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
@@ -266,7 +407,7 @@ h1 span {
 }
 
 .tab-btn.active {
-  background: #ffffff;
+  background: var(--bg-input);
   color: var(--text-primary);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
@@ -276,7 +417,7 @@ h1 span {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  background: #f8fafc;
+  background: var(--canvas-bg);
   border: 1px solid var(--panel-border);
 }
 
@@ -295,7 +436,7 @@ h1 span {
   align-items: center;
   gap: 16px;
   padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--speedo-bg);
   border: 1px solid var(--panel-border);
   border-radius: 10px;
   backdrop-filter: blur(8px);
@@ -566,7 +707,7 @@ h1 span {
 }
 
 .ws-btn {
-  background: #ffffff;
+  background: var(--ws-btn-bg);
   border: 1px solid var(--panel-border);
   color: var(--text-muted);
   padding: 4px 10px;
@@ -579,7 +720,7 @@ h1 span {
 }
 
 .ws-btn:hover {
-  background: rgba(15, 23, 42, 0.05);
+  background: var(--ws-btn-hover-bg);
   color: var(--text-primary);
 }
 
@@ -599,7 +740,7 @@ h1 span {
 
 .ws-list-container {
   overflow-y: scroll;
-  background: #ffffff;
+  background: var(--ws-list-bg);
   border-right: 1px solid var(--panel-border);
   height: 100%;
 }
@@ -615,7 +756,7 @@ h1 span {
 .ws-table th {
   position: sticky;
   top: 0;
-  background: rgba(15, 23, 42, 0.04);
+  background: var(--ws-table-th-bg);
   padding: 8px;
   font-weight: 700;
   color: var(--text-primary);
@@ -624,7 +765,7 @@ h1 span {
 
 .ws-table td {
   padding: 6px 8px;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+  border-bottom: 1px solid var(--ws-table-border);
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -642,14 +783,14 @@ h1 span {
 }
 
 /* Color Coding Packets */
-.ws-table tr:nth-child(even) { background: rgba(15, 23, 42, 0.015); }
+.ws-table tr:nth-child(even) { background: var(--ws-table-tr-even-bg); }
 .ws-proto-tcp { color: var(--neon-rose); font-weight: 600; }
 .ws-proto-udp { color: var(--neon-blue); font-weight: 600; }
 .ws-proto-icmp { color: var(--neon-green); font-weight: 600; }
 
 /* Wireshark Detail Panel */
 .ws-detail-container {
-  background: #f8fafc;
+  background: var(--ws-detail-bg);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -657,7 +798,7 @@ h1 span {
 }
 
 .detail-header {
-  background: rgba(15, 23, 42, 0.04);
+  background: var(--ws-detail-header-bg);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 12px;
