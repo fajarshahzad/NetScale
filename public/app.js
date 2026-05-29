@@ -5,6 +5,7 @@ const $ = (id) => document.getElementById(id);
 const state = {
   activeTab: "broadcast", // 'broadcast' | 'unicast' | 'msgpassing'
   mode: "parallel",       // 'parallel' | 'sequential'
+  theme: "light",        // 'light' | 'dark' | 'dusky'
   
   // Custom Packet Injector configuration
   packetSize: 1500,
@@ -66,6 +67,7 @@ const themeColors = {
 // Start initialization
 window.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
+  setTheme(state.theme);
   changeTab("broadcast");
   populateSelectors();
   updateAnalyticsUI();
@@ -98,6 +100,11 @@ function setupEventListeners() {
   // Pipeline Mode buttons
   $("parallelBtn").addEventListener("click", () => togglePipelineMode("parallel"));
   $("sequentialBtn").addEventListener("click", () => togglePipelineMode("sequential"));
+
+  // Appearance theme buttons
+  $("themeLightBtn").addEventListener("click", () => setTheme("light"));
+  $("themeDarkBtn").addEventListener("click", () => setTheme("dark"));
+  $("themeDuskyBtn").addEventListener("click", () => setTheme("dusky"));
   
   // Size preset selectors
   document.querySelectorAll(".preset-btn").forEach((btn) => {
@@ -214,6 +221,16 @@ function updateAnalyticsUI() {
 
   // Calculate speedup
   const speedup = parLatency ? (seqLatency / parLatency) : 0;
+  $("speedupVal").textContent = `${speedup.toFixed(1)}x`;
+}
+
+// Apply selected theme and update button states
+function setTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute("data-theme", theme);
+  document.querySelectorAll(".theme-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.theme === theme);
+  });
 }
 
 // Sidebar live diagnostics

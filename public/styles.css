@@ -1,39 +1,39 @@
 :root, [data-theme="light"] {
-  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  --panel-bg: rgba(255, 255, 255, 0.85);
-  --panel-border: rgba(148, 163, 184, 0.25);
-  --panel-glow: 0 8px 30px rgba(15, 23, 42, 0.05);
+  --bg-gradient: linear-gradient(135deg, #ffffff 0%, #dbeafe 100%);
+  --panel-bg: rgba(255, 255, 255, 0.95);
+  --panel-border: rgba(147, 197, 253, 0.28);
+  --panel-glow: 0 8px 30px rgba(59, 130, 246, 0.12);
   
-  /* Bright High-Contrast Brand Palette */
-  --neon-blue: #0284c7;  /* Deep Sky Blue */
-  --neon-green: #059669; /* Emerald Green */
-  --neon-rose: #e11d48;  /* Vibrant Rose */
-  --neon-amber: #d97706; /* Rich Amber */
+  /* Light White / Sky Blue Brand Palette */
+  --neon-blue: #38bdf8;  /* Sky Blue */
+  --neon-green: #22c55e; /* Soft Green */
+  --neon-rose: #ec4899;  /* Soft Pink */
+  --neon-amber: #f59e0b; /* Warm Amber */
   --text-primary: #0f172a; /* Slate 900 */
-  --text-muted: #64748b;   /* Slate 500 */
-  --bg-input: #ffffff;
+  --text-muted: #475569;   /* Slate 600 */
+  --bg-input: #f8fafc;
   --mono-font: 'JetBrains Mono', monospace;
   --sans-font: 'Outfit', sans-serif;
 
   /* Theme variables for canvas & specific backgrounds */
-  --canvas-bg: #f8fafc;
+  --canvas-bg: #eff6ff;
   --node-bg: #ffffff;
-  --node-outline: #64748b;
+  --node-outline: #60a5fa;
   --node-title: #0f172a;
-  --node-ip: #64748b;
-  --link-color: rgba(15, 23, 42, 0.12);
-  --pulse-dot-color: rgba(2, 132, 199, 0.55);
-  --node-stack-color: rgba(15, 23, 42, 0.15);
-  --node-status-row-bg: #f8fafc;
+  --node-ip: #475569;
+  --link-color: rgba(56, 189, 248, 0.18);
+  --pulse-dot-color: rgba(56, 189, 248, 0.45);
+  --node-stack-color: rgba(56, 189, 248, 0.12);
+  --node-status-row-bg: #eff6ff;
   --ws-list-bg: #ffffff;
-  --ws-table-th-bg: rgba(15, 23, 42, 0.04);
-  --ws-table-tr-even-bg: rgba(15, 23, 42, 0.015);
-  --ws-detail-bg: #f8fafc;
-  --ws-detail-header-bg: rgba(15, 23, 42, 0.04);
+  --ws-table-th-bg: rgba(56, 189, 248, 0.08);
+  --ws-table-tr-even-bg: rgba(56, 189, 248, 0.03);
+  --ws-detail-bg: #eff6ff;
+  --ws-detail-header-bg: rgba(56, 189, 248, 0.06);
   --ws-btn-bg: #ffffff;
-  --ws-btn-hover-bg: rgba(15, 23, 42, 0.05);
-  --ws-table-border: rgba(15, 23, 42, 0.04);
-  --speedo-bg: rgba(255, 255, 255, 0.9);
+  --ws-btn-hover-bg: rgba(56, 189, 248, 0.08);
+  --ws-table-border: rgba(56, 189, 248, 0.08);
+  --speedo-bg: rgba(255, 255, 255, 0.95);
 }
 
 [data-theme="dark"] {
@@ -74,40 +74,40 @@
 }
 
 [data-theme="dusky"] {
-  --bg-gradient: linear-gradient(135deg, #18122B 0%, #2b1f3d 50%, #3e3256 100%);
-  --panel-bg: rgba(46, 37, 64, 0.75);
-  --panel-border: rgba(178, 164, 255, 0.15);
-  --panel-glow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --bg-gradient: linear-gradient(135deg, #f3e8dd 0%, #e8d7c2 50%, #d9c5aa 100%);
+  --panel-bg: rgba(255, 249, 240, 0.95);
+  --panel-border: rgba(183, 148, 112, 0.18);
+  --panel-glow: 0 8px 30px rgba(163, 124, 78, 0.12);
   
-  --neon-blue: #a78bfa;  /* Premium Soft Purple/Amethyst */
-  --neon-green: #f472b6; /* Sunset Pink */
-  --neon-rose: #f43f5e;  /* Deep Coral */
-  --neon-amber: #fbbf24; /* Warm Gold */
-  --text-primary: #f5e8e4;
-  --text-muted: #a690b8;
-  --bg-input: #393053;
+  --neon-blue: #c9b49a;  /* Warm Beige */
+  --neon-green: #f3d5ae; /* Cream */
+  --neon-rose: #d8b7a7;  /* Dusty Peach */
+  --neon-amber: #d8b069; /* Soft Gold */
+  --text-primary: #4d3f34;
+  --text-muted: #7b6b5d;
+  --bg-input: #f7efe6;
   --mono-font: 'JetBrains Mono', monospace;
   --sans-font: 'Outfit', sans-serif;
 
   /* Theme variables for canvas & specific backgrounds */
-  --canvas-bg: #1d162a;
-  --node-bg: #393053;
-  --node-outline: #a690b8;
-  --node-title: #f5e8e4;
-  --node-ip: #a690b8;
-  --link-color: rgba(167, 139, 250, 0.15);
-  --pulse-dot-color: rgba(167, 139, 250, 0.4);
-  --node-stack-color: rgba(245, 232, 228, 0.1);
-  --node-status-row-bg: #18122B;
-  --ws-list-bg: #2e2540;
-  --ws-table-th-bg: rgba(167, 139, 250, 0.05);
-  --ws-table-tr-even-bg: rgba(167, 139, 250, 0.02);
-  --ws-detail-bg: #2e2540;
-  --ws-detail-header-bg: rgba(167, 139, 250, 0.05);
-  --ws-btn-bg: #393053;
-  --ws-btn-hover-bg: rgba(167, 139, 250, 0.08);
-  --ws-table-border: rgba(167, 139, 250, 0.08);
-  --speedo-bg: rgba(29, 22, 42, 0.95);
+  --canvas-bg: #f8eee0;
+  --node-bg: #fbf4e8;
+  --node-outline: #c2a678;
+  --node-title: #4d3f34;
+  --node-ip: #7b6b5d;
+  --link-color: rgba(141, 103, 74, 0.18);
+  --pulse-dot-color: rgba(227, 196, 160, 0.6);
+  --node-stack-color: rgba(237, 224, 209, 0.25);
+  --node-status-row-bg: #f5eadb;
+  --ws-list-bg: #f7efe6;
+  --ws-table-th-bg: rgba(183, 148, 112, 0.08);
+  --ws-table-tr-even-bg: rgba(183, 148, 112, 0.03);
+  --ws-detail-bg: #f6eee2;
+  --ws-detail-header-bg: rgba(183, 148, 112, 0.06);
+  --ws-btn-bg: #f3e5d4;
+  --ws-btn-hover-bg: rgba(183, 148, 112, 0.12);
+  --ws-table-border: rgba(183, 148, 112, 0.08);
+  --speedo-bg: rgba(255, 249, 240, 0.98);
 }
 
 * {
