@@ -28,6 +28,7 @@ typedef SOCKET socket_t;
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <time.h>
 #include <unistd.h>
 typedef int socket_t;
 #define INVALID_SOCKET (-1)
@@ -118,7 +119,12 @@ static uint64_t now_us(void)
 }
 #else
 typedef pthread_t thread_t;
-static void sleep_ms(unsigned ms) { usleep(ms * 1000u); }
+static void sleep_ms(unsigned ms) {
+    struct timespec ts;
+    ts.tv_sec = ms / 1000u;
+    ts.tv_nsec = (long)(ms % 1000u) * 1000000L;
+    nanosleep(&ts, NULL);
+}
 static uint64_t now_us(void)
 {
     struct timeval tv;
@@ -431,8 +437,8 @@ static void send_file(socket_t client, const char *url_path)
         send_response(client, "500 Internal Server Error", "text/plain", "Out of memory");
         return;
     }
-    fread(body, 1, (size_t)size, fp);
-    body[size] = '\0';
+    size_t read_bytes = fread(body, 1, (size_t)size, fp);
+    body[read_bytes < (size_t)size ? read_bytes : (size_t)size] = '\0';
     fclose(fp);
     send_response(client, "200 OK", content_type_for(path), body);
     free(body);
@@ -467,6 +473,9 @@ static void send_stats(socket_t client)
     uint64_t udp = atomic_load(&g_stats.udp);
     uint64_t icmp = atomic_load(&g_stats.icmp);
     uint64_t other = atomic_load(&g_stats.other);
+    uint64_t seq_latency = atomic_load(&g_stats.sequential_latency_us);
+    uint64_t par_latency = atomic_load(&g_stats.parallel_latency_us);
+    double speedup = par_latency ? ((double)seq_latency / (double)par_latency) : 0.0;
 
     talker_snapshot_t copy[MAX_TALKERS];
     for (size_t i = 0; i < MAX_TALKERS; ++i) {
@@ -479,15 +488,16 @@ static void send_stats(socket_t client)
     size_t used = 0;
     used += (size_t)snprintf(body + used, sizeof(body) - used,
         "{\"mode\":\"%s\",\"generated\":%" PRIu64 ",\"processed\":%" PRIu64
-        ",\"throughput\":%" PRIu64 ",\"drops\":%" PRIu64
+        ",\"processedPackets\":%" PRIu64 ",\"throughput\":%" PRIu64 ",\"throughputRate\":%" PRIu64
+        ",\"drops\":%" PRIu64 ",\"packetDrops\":%" PRIu64
+        ",\"speedup\":%.2f,\"simulationSpeedup\":%.2f"
         ",\"latencyUs\":%" PRIu64 ",\"sequentialLatencyUs\":%" PRIu64
         ",\"parallelLatencyUs\":%" PRIu64 ",\"protocols\":{\"tcp\":%" PRIu64
         ",\"udp\":%" PRIu64 ",\"icmp\":%" PRIu64 ",\"other\":%" PRIu64 "},\"talkers\":[",
         atomic_load(&g_mode) == MODE_PARALLEL ? "parallel" : "sequential",
-        atomic_load(&g_stats.generated), processed, throughput,
-        atomic_load(&g_stats.dropped), avg_latency,
-        atomic_load(&g_stats.sequential_latency_us),
-        atomic_load(&g_stats.parallel_latency_us), tcp, udp, icmp, other);
+        atomic_load(&g_stats.generated), processed, processed, throughput, throughput,
+        atomic_load(&g_stats.dropped), atomic_load(&g_stats.dropped), speedup, speedup,
+        avg_latency, seq_latency, par_latency, tcp, udp, icmp, other);
 
     int emitted = 0;
     for (size_t i = 0; i < MAX_TALKERS && emitted < 5; ++i) {

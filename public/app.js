@@ -17,8 +17,8 @@ const state = {
     processed: 0,
     drops: 0,
     throughput: 0,
-    seqLatencyUs: 15400, // 15.4 ms initial sequential latency
-    parLatencyUs: 12,    // 12 us initial parallel latency
+    seqLatencyUs: 0,
+    parLatencyUs: 0,
   },
   
   // Active packets in simulation path
@@ -83,7 +83,8 @@ window.addEventListener("DOMContentLoaded", () => {
   
   requestAnimationFrame(frame);
   
-  // Background stats fetch (keep backend compatible if active)
+  // Fetch backend stats immediately and then poll periodically.
+  pollBackendStats();
   setInterval(pollBackendStats, 1000);
 });
 
@@ -204,16 +205,15 @@ function updateAnalyticsUI() {
   $("throughput").textContent = `${formatCompact(state.stats.throughput)} pkt/s`;
   
   const seqLatency = state.stats.seqLatencyUs || 0;
-  const parLatency = state.stats.parLatencyUs || 1; // absolute minimum to prevent division by zero
-  
+  const parLatency = state.stats.parLatencyUs || 0;
+
   // Format Latencies
   const seqMs = (seqLatency / 1000).toFixed(2);
   $("seqLatency").textContent = `${seqMs} ms`;
   $("parLatency").textContent = `${parLatency} us`;
-  
+
   // Calculate speedup
-  const speedup = seqLatency / parLatency;
-  $("speedupVal").textContent = `${speedup.toFixed(1)}x`;
+  const speedup = parLatency ? (seqLatency / parLatency) : 0;
 }
 
 // Sidebar live diagnostics
@@ -828,18 +828,16 @@ function clearAnalytics() {
 async function pollBackendStats() {
   try {
     const response = await fetch("/api/stats");
+    if (!response.ok) return;
+
     const stats = await response.json();
-    
-    // Sync backend numbers if they are non-zero (i.e. if C backend generated them)
-    if (stats.processed > 0) {
-      state.stats.processed = stats.processed;
-      state.stats.drops = stats.drops;
-      state.stats.throughput = stats.throughput;
-      state.stats.seqLatencyUs = stats.sequentialLatencyUs;
-      state.stats.parLatencyUs = stats.parallelLatencyUs;
-      
-      updateAnalyticsUI();
-    }
+    state.stats.processed = stats.processed || 0;
+    state.stats.drops = stats.drops || 0;
+    state.stats.throughput = stats.throughput || 0;
+    state.stats.seqLatencyUs = stats.sequentialLatencyUs || 0;
+    state.stats.parLatencyUs = stats.parallelLatencyUs || 0;
+
+    updateAnalyticsUI();
   } catch (e) {
     // Ignore server connection error - standalone simulation works flawlessly
   }

@@ -24,7 +24,7 @@ if errorlevel 1 (
 for /f "usebackq delims=" %%i in (`wsl.exe -d %WSL_DISTRO% -u %WSL_USER% -- wslpath -a "%CD%"`) do set "WSL_DIR=%%i"
 
 echo Building NetScale in WSL as %WSL_USER%@%WSL_DISTRO%...
-wsl.exe -d %WSL_DISTRO% -u %WSL_USER% -- bash -lc "cd '%WSL_DIR%' && echo Using compiler: && cc --version | head -n 1 && cc src/netscale_server.c -O2 -std=c11 -pthread -o netscale"
+wsl.exe -d %WSL_DISTRO% -u %WSL_USER% -- bash -lc "cd '%WSL_DIR%' && echo Using compiler: && cc --version | head -n 1 && cc src/netscale_server.c -O2 -std=c11 -pthread -o netscale_server"
 
 if errorlevel 1 (
     echo.
@@ -36,6 +36,6 @@ if errorlevel 1 (
 
 echo Starting NetScale at http://localhost:8080
 start "" powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Sleep -Seconds 2; Start-Process 'http://localhost:8080'"
-wsl.exe -d %WSL_DISTRO% -u %WSL_USER% -- bash -lc "cd '%WSL_DIR%' && ./netscale"
+wsl.exe -d %WSL_DISTRO% -u %WSL_USER% -- bash -lc "cd '%WSL_DIR%' && ./netscale_server"
 
 endlocal
