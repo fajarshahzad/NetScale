@@ -1,5 +1,6 @@
 @echo off
 setlocal
+cd /d "%~dp0.."
 
 where gcc >nul 2>nul
 if %errorlevel%==0 (

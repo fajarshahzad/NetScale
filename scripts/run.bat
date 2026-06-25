@@ -1,5 +1,6 @@
 @echo off
 setlocal
+cd /d "%~dp0.."
 
 set "WSL_DISTRO=Ubuntu"
 set "WSL_USER=fajar"
