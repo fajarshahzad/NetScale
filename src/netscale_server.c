@@ -16,6 +16,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
+#include <direct.h>
 #pragma comment(lib, "ws2_32.lib")
 typedef SOCKET socket_t;
 #define close_socket closesocket
@@ -526,8 +527,47 @@ static void handle_client(socket_t client)
     char method[8] = {0};
     char path[256] = {0};
     sscanf(request, "%7s %255s", method, path);
+
+    if (strcmp(method, "POST") == 0) {
+        if (strncmp(path, "/api/log", 8) == 0) {
+            char *body = strstr(request, "\r\n\r\n");
+            if (body) {
+                body += 4;
+            } else {
+                body = "";
+            }
+
+            const char *file_path = NULL;
+            if (strcmp(path, "/api/log/json") == 0) {
+                file_path = "results/raw_output/ui_output.json";
+            } else {
+                file_path = "results/raw_output/ui_output.log";
+            }
+
+#ifdef _WIN32
+            _mkdir("results");
+            _mkdir("results/raw_output");
+#else
+            mkdir("results", 0777);
+            mkdir("results/raw_output", 0777);
+#endif
+
+            FILE *f = fopen(file_path, "ab");
+            if (f) {
+                fprintf(f, "%s\n", body);
+                fclose(f);
+                send_response(client, "200 OK", "text/plain", "Logged successfully");
+            } else {
+                send_response(client, "500 Internal Server Error", "text/plain", "Could not open log file");
+            }
+            return;
+        }
+        send_response(client, "404 Not Found", "text/plain", "Not found");
+        return;
+    }
+
     if (strcmp(method, "GET") != 0) {
-        send_response(client, "405 Method Not Allowed", "text/plain", "GET only");
+        send_response(client, "405 Method Not Allowed", "text/plain", "GET or POST only");
         return;
     }
 

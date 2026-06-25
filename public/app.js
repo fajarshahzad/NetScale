@@ -637,6 +637,33 @@ function varColor(cssVar) {
   return "#ffffff";
 }
 
+// Send a packet log entry to the server to write to results/raw_output
+async function sendPacketLogToServer(packet) {
+  const logLine = `No: ${packet.id}, Time: ${packet.time}s, Source: ${packet.src}, Destination: ${packet.dst}, Protocol: ${packet.proto}, Length: ${packet.length}, Info: ${packet.info}`;
+  
+  try {
+    // Write plain text log
+    fetch("/api/log/text", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      body: logLine
+    });
+    
+    // Write JSON log
+    fetch("/api/log/json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(packet)
+    });
+  } catch (e) {
+    // Ignore server connection error in standalone mode
+  }
+}
+
 // Wireshark Logger helper
 function logToWireshark(src, dst, proto, length) {
   const time = (performance.now() / 1000).toFixed(4);
@@ -670,6 +697,7 @@ function logToWireshark(src, dst, proto, length) {
   };
   
   state.captureLog.push(packet);
+  sendPacketLogToServer(packet);
   
   // Render Wireshark Row
   const tbody = $("wsTableBody");
