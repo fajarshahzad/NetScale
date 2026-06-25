@@ -62,9 +62,3 @@ http://localhost:8080
 ```
 
 Use the mode switch in the dashboard to compare sequential and parallel behavior.
-
-## Notes For Your PDC Presentation
-
-- Sequential mode intentionally simulates UI/render blocking in the data path, so drops and latency rise.
-- Parallel mode uses one producer, multiple workers, a preallocated ring buffer, and atomic counters.
-- The UI is decoupled from backend processing and refreshes from `/api/stats`.
